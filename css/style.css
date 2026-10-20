@@ -1,0 +1,41 @@
+@property --r{
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
+
+html, body{
+    margin: 0;
+    height: 100%;
+    background: #000;
+    color: #fff;
+}
+
+#home{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #1b2433;
+}
+
+#intro{
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: #000;
+    --r: 0%;
+
+    -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--r), #000 calc(var(--r) + 8%));
+            mask: radial-gradient(circle at 50% 50%, transparent var(--r), #000 calc(var(--r) + 8%)); 
+}
+
+#intro.open{
+    transition: --r 1.6s ease-in;
+    --r: 150%;
+}
+
+#dots {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
