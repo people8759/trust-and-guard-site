@@ -5,6 +5,7 @@ const ctx = canvas.getContext('2d');
 const story = document.getElementById('story');
 const voice = document.getElementById('voice');
 const bgm = document.getElementById('bgm');
+bgm.volume = 0.5;
 const enterBtn = document.getElementById('enter');
 
 // 圓點的數量

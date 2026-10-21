@@ -381,7 +381,9 @@ body.home-ready .title, body.home-ready .menu{
 }
 
 /* 其他設定
-1. 關閉模糊對焦和位移 */
+1. 關閉模糊對焦和位移 
+2. 取消明顯的點擊痕跡（手機設備）
+*/
 @media (prefers-reduced-motion: reduce){
     .amiya{
         filter: none;
