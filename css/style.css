@@ -4,20 +4,312 @@
     initial-value: 0%;
 }
 
+:root{
+    --bg: #0d0d0f;
+    --gold: #d9c7a8;
+    --text: #ffffff;
+    --text-soft: #e8e2d8;
+    --text-mute: #cfc7ba;
+    --line: rgba(255, 255, 255, 0.22);
+
+    --font-en: "Cormorant Garamond", serif;
+    --font-label: "Cinzel", serif;
+    --font-serif: "Noto Serif TC", serif;
+    --font-sans: "Noto Sans TC", sans-serif;
+    --font-hand: "LXGW WenKai TC", serif;
+}
+
 html, body{
     margin: 0;
     height: 100%;
-    background: #000;
-    color: #fff;
+    background: var(--bg);
+    color: var(--text);
 }
+
+/* 首頁 */
 
 #home{
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    background: #1b2433;
+    display: flex;
+    justify-content: center;
+    background: var(--bg);
 }
 
+.stage{
+    position: relative;
+    width: min(100%, 430px);
+    height: 100vh;
+    height: 100svh;
+    min-height: 800px;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+.bg{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-chess{
+    top: 0;
+    background-image: url("../images/bg-chess.png");
+}
+
+.bg-chess::after{
+    content:"";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+    height: 43%;
+    background: linear-gradient(to bottom, rgba(13, 13, 15, 0), rgba(13, 13, 15, 0.85));
+}
+
+.bg-violin{
+    bottom: 0;
+    background-image: url("../images/bg-violin.png");
+}
+
+.bg-violin::before{
+    content:"";
+    position: absolute;
+    inset: 0;
+    background: rgba(13, 13, 15, 0.62);
+}
+
+.bg-violin::after{
+    content:"";
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    height: 37.5%;
+    background: linear-gradient(to bottom, rgba(13, 13, 15, 0.85), rgba(13, 13, 15, 0));
+}
+
+.title{
+    position:absolute;
+    left: 0%;
+    width: 100%;
+    top: calc(50% - 78px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.kicker{
+    margin: 0;
+    font-family: var(--font-label);
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+}
+
+.brand{
+    margin: 0;
+    font-family: var(--font-en);
+    font-weight: 500;
+    font-size: 44px;
+    line-height: normal;
+}
+
+.subtitle{
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 6px;
+    color: var(--text-soft);
+}
+
+.menu{
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    top: calc(50% + 76px);
+}
+
+.menu ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu a{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 4px;
+    border-bottom: 1px solid var(--line);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+}
+
+.menu .no{
+    font-family: var(--font-en);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--gold);
+}
+
+.menu .cn{
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.menu .en{
+    font-family: var(--font-en);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-mute);
+}
+
+.menu .arrow{
+    margin-left: auto;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--gold);
+    transition: transform 0.25s ease;
+}
+
+.menu a:hover,.menu a:focus-visible{
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu a:hover .arrow,.menu a:focus-visible .arrow{
+    transform: translateX(4px);
+}
+
+/* 進場動畫 */
+.title, .menu{
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1s ease .3s, transform 1s ease .3s;
+}
+
+body.home-ready .title, body.home-ready .menu{
+    opacity: 1;
+    transform: none;
+}
+
+/* 曖昧動畫+臺詞 */
+#story{
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    background: var(--bg);
+    overflow: hidden;
+    transition: opacity 1s ease;
+}
+
+#story.ready{
+    cursor: pointer;
+}
+
+#story.leave{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.quote{
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 50%;
+    margin: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    font-family: var(--font-hand);
+    font-size: 24px;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity .8s ease;
+}
+
+#story.show-quote .quote{
+    opacity: 1;
+    transition: opacity 1.2s ease .6s;
+}
+
+.amiya{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(100%, 430px);
+    aspect-ratio: 360 / 265;
+    transform: translate(-50%, -50%);
+    
+    opacity: 0;
+    filter: blur(14px);
+    transition: opacity 1.8s ease, filter 2s ease;
+
+    /* 上下邊緣淡入淡出 95/265=36%（粗估）*/
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 36%, #000 64%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 36%, #000 64%, transparent);
+}
+
+.amiya img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#story.show-amiya .amiya{
+    opacity: 1;
+    filter: blur(0);
+}
+
+.tap{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% + 192px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tap .cn{
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--gold);
+}
+
+.tap .en{
+    font-family: var(--font-label);
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #8f8576;
+}
+
+#story.ready .tap{
+    animation: blink 2.4s ease-in-out infinite;
+}
+
+@keyframes blink{
+    0%, 100%{
+        opacity: .35;
+    }
+    50%{
+        opacity: 1;
+    }
+}
+
+/* 睜眼動畫 */
 #intro{
     position: fixed;
     inset: 0;
@@ -38,4 +330,53 @@ html, body{
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* 點擊繼續動畫&解鎖阿米婭語音*/
+#enter{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 28px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    animation: blink 2.4s ease-in-out infinite;
+    transition: opacity .6s ease;
+}
+
+#enter .cn{
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: var(--gold);
+}
+
+#enter .en{
+    font-family: var(--font-label);
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #8f8576;
+}
+
+#enter.hide{
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 其他設定
+1. 關閉模糊對焦和位移 */
+@media (prefers-reduced-motion: reduce){
+    .amiya{
+        filter: none;
+    }
+    .title, .menu{
+        transform: none;
+    }
 }

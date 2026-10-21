@@ -2,19 +2,67 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name = "viewport" content="width=device-width, initial-scale = 1.0">
-    <title>Trust and Guard</title>
-    <link rel = "stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust and Guard｜互信組的小小基地</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:ital,wght@0,500;1,400&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300&family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <!--首頁-->
     <main id="home">
-        <h1>歡迎來到宇婭的婚禮現場</h1>
+        <div class="stage">
+            <div class="bg bg-chess" aria-hidden="true"></div>
+            <div class="bg bg-violin" aria-hidden="true"></div>
+
+            <header class="title">
+                <p class="kicker">WELCOME</p>
+                <h1 class="brand">Trust &amp; Guard</h1>
+                <p class="subtitle">互信組的小小基地</p>
+            </header>
+
+            <nav class="menu" aria-label="主選單">
+                <ul>
+                    <li><a href="#"><span class="no">01</span><span class="cn">人物設定</span><span class="en">Character</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                    <li><a href="#"><span class="no">02</span><span class="cn">故事</span><span class="en">Story</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                    <li><a href="#"><span class="no">03</span><span class="cn">紀念日</span><span class="en">Anniversary</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                    <li><a href="#"><span class="no">04</span><span class="cn">小遊戲</span><span class="en">Games</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                    <li><a href="#"><span class="no">05</span><span class="cn">回憶錄</span><span class="en">Gallery</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                </ul>
+            </nav>
+        </div>
     </main>
-    
+
+    <!--曖昧立繪展示-->
+    <section id="story">
+        <p class="quote">「歡迎回來，Dr.宇」</p>
+
+        <div class="amiya">
+            <img src="images/art-amiya.png" alt="阿米婭">
+        </div>
+
+        <p class="tap">
+            <span class="cn">點擊畫面繼續</span>
+            <span class="en">TAP TO CONTINUE</span>
+        </p>
+    </section>
+
+    <!--開場動畫-->
     <div id="intro">
         <canvas id="dots"></canvas>
+        <button id="enter" type="button">
+            <span class="cn">睜開眼睛</span>
+            <span class="en">OPEN YOUR EYES</span>
+        </button>
     </div>
 
-    <script src="js/main.js"></script>   
+    <audio id="voice" src="audio/amiya-okaerinasai.wav" preload="auto"></audio>
+    <audio id="bgm" src="audio/theme.mp3" loop preload="none"></audio>
+
+    <script src="js/main.js"></script>
 </body>
-</html>         
+</html>

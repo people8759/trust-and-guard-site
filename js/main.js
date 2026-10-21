@@ -2,10 +2,56 @@ const intro = document.getElementById('intro');
 const canvas = document.getElementById('dots');
 const ctx = canvas.getContext('2d');
 
+const story = document.getElementById('story');
+const voice = document.getElementById('voice');
+const bgm = document.getElementById('bgm');
+const enterBtn = document.getElementById('enter');
+
 // 圓點的數量
 const DOT_COUNT = 40;
 // 圓點漂浮多久后開始睜開眼睛動畫
 const DRIFT_MS = 2500;
+
+// 睜開眼睛后，多久開始播放語音和臺詞
+const VOICE_DELAY_MS = 600;
+// 臺詞停留多久后切換成立繪
+const QUOTE_OUT_MS = 3200;
+// 睜開眼睛后， 多久才允許點擊繼續
+const READY_MS = 5400;
+
+let ready = false;
+
+function startStory(){
+    story.classList.add('show-quote');
+    
+    setTimeout(() =>{
+        voice.currentTime = 0;
+        voice.play().catch(() => {});
+    }, VOICE_DELAY_MS);
+
+    setTimeout(() => {
+        story.classList.remove('show-quote');
+        story.classList.add('show-amiya');
+    }, QUOTE_OUT_MS);
+
+    setTimeout(() => {
+        ready = true;
+        story.classList.add('ready');
+    }, READY_MS);
+}
+
+story.addEventListener('click', () => {
+    if(!ready) return;
+    ready = false;
+
+    bgm.play().catch(() => {});
+
+    // 沒有音檔也不會發生錯誤處理
+    story.classList.add('leave');
+
+    document.body.classList.add('home-ready');
+    setTimeout(() => story.remove(), 1200);
+});
 
 function resize(){
     const dpr = window.devicePixelRatio || 1;
@@ -35,25 +81,39 @@ function draw(t){
 
     ctx.clearRect(0, 0, w, h);
 
-for (const dot of dots){
-    dot.dist += dot.speed;
-    const x = cx + Math.cos(dot.angle) * dot.dist;
-    const y = cy + Math.sin(dot.angle) * dot.dist;
+    for (const dot of dots){
+        dot.dist += dot.speed;
+        const x = cx + Math.cos(dot.angle) * dot.dist;
+        const y = cy + Math.sin(dot.angle) * dot.dist;
 
-    const fade = Math.max(0, 1 - dot.dist / (Math.max(w,h) * 0.6));
-    ctx.beginPath();
-    ctx.arc(x, y, dot.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha * fade})`;
-    ctx.shadowColor = `rgba(255, 255, 255, 0.8)`;
-    ctx.shadowBlur = 8;
-    ctx.fill();
+        const fade = Math.max(0, 1 - dot.dist / (Math.max(w,h) * 0.6));
+        ctx.beginPath();
+        ctx.arc(x, y, dot.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha * fade})`;
+        ctx.shadowColor = `rgba(255, 255, 255, 0.8)`;
+        ctx.shadowBlur = 8;
+        ctx.fill();
+    }
+
+    if (t - start >= DRIFT_MS && !intro.classList.contains("open")){
+        intro.classList.add("open");
+        startStory();
+
+        // 睜眼的同時開始播放臺詞和語音
+        setTimeout(() => intro.remove(), 1800);
+        return;
+    }
+    requestAnimationFrame(draw);
 }
 
-if (t - start >= DRIFT_MS && !intro.classList.contains("open")){
-    intro.classList.add('open');
-    setTimeout(() => intro.remove(), 1800);
-    return;
-}
-requestAnimationFrame(draw);
-}
-requestAnimationFrame(draw);
+// 點擊進入，先播放語音再開始動畫
+enterBtn.addEventListener('click', () => {
+    enterBtn.classList.add('hide');
+
+    voice.play().then(() => {
+        voice.pause();
+        voice.currentTime = 0;
+    }).catch(() => {});
+
+    requestAnimationFrame(draw);
+})
