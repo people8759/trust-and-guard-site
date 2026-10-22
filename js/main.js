@@ -8,6 +8,15 @@ const bgm = document.getElementById('bgm');
 bgm.volume = 0.5;
 const enterBtn = document.getElementById('enter');
 
+const pageFrame = document.getElementById('pageFrame');
+const skipIntro = sessionStorage.getItem('introDone') === '1';
+
+if (skipIntro) {
+    intro.remove();
+    story.remove();
+    document.body.classList.add('home-ready');
+}
+
 // 圓點的數量
 const DOT_COUNT = 40;
 // 圓點漂浮多久后開始睜開眼睛動畫
@@ -46,6 +55,8 @@ story.addEventListener('click', () => {
     ready = false;
 
     bgm.play().catch(() => {});
+    localStorage.setItem('bgmOn', '1');
+    sessionStorage.setItem('introDone', '1');
 
     // 沒有音檔也不會發生錯誤處理
     story.classList.add('leave');
@@ -118,3 +129,53 @@ enterBtn.addEventListener('click', () => {
 
     requestAnimationFrame(draw);
 })
+
+window.addEventListener('pagehide', () => {
+    if (!bgm.paused) localStorage.setItem('bgmTime', bgm.currentTime);
+});
+
+
+function resumeBgm(){
+    if (localStorage.getItem('bgmOn') !== '1') return;
+    bgm.currentTime = parseFloat(localStorage.getItem('bgmTime')) || 0;
+    const start = () => bgm.play().catch(() => {});
+    bgm.play().catch(() => {
+        window.addEventListener('pointerdown', start, {once: true});
+        window.addEventListener('keydown', start, {once: true});
+    });
+}
+
+function openPage(url, push){
+    if (!pageFrame.getAttribute('src')) pageFrame.src = url;
+    pageFrame.classList.add('is-open');
+    if (push) history.pushState({page: true}, '', '#character');
+}
+
+function closePage(){
+    pageFrame.classList.remove('is-open');
+}
+
+document.querySelectorAll('.menu a[data-page]').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        openPage(link.dataset.page, true);
+    });
+});
+
+window.addEventListener('popstate', () => {
+    if (location.hash === '#character') openPage('character.html', false);
+    else closePage();
+});
+
+window.addEventListener('message', e => {
+    if (e.origin !== location.origin) return;
+    if (e.data === 'close-page') {
+        closePage();
+        history.replaceState(null, '', location.pathname);
+    }
+});
+
+if (skipIntro) {
+    resumeBgm();
+    if (location.hash === '#character') openPage('character.html', false);
+}
