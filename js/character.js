@@ -21,10 +21,12 @@ function playVideo(){
     thumb.style.cursor = 'default';
 }
 
-thumb.addEventListener('click', playVideo, {once: true});
-thumb.addEventListener('keydown', e => {
-    if (e.key === 'Enter') playVideo();
-}, {once: true});
+if (thumb) {
+    thumb.addEventListener('click', playVideo, {once: true});
+    thumb.addEventListener('keydown', e => {
+        if (e.key === 'Enter') playVideo();
+    }, {once: true});
+}
 
 
 const bgm = document.getElementById('bgm');
@@ -57,3 +59,26 @@ if (window.parent !== window) {
         });
     });
 }
+
+document.querySelectorAll('[data-zoom]').forEach(el => {
+    el.addEventListener('click', () => {
+        const box = document.createElement('div');
+        box.className = 'lightbox';
+        const img = document.createElement('img');
+        img.src = el.querySelector('img').src;
+        box.appendChild(img);
+        box.addEventListener('click', () => box.remove());
+        document.body.appendChild(box);
+    });
+});
+
+document.querySelectorAll('a.tab').forEach(link => {
+    link.addEventListener('click', e => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        document.body.classList.add('leaving');
+        setTimeout(() => { location.href = link.href; }, 220);
+    });
+});
+
+window.addEventListener('pageshow', () => document.body.classList.remove('leaving'));

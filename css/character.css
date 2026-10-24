@@ -12,6 +12,7 @@
     --serif:"Noto Serif TC",serif;
     --sans:"Noto Sans TC",sans-serif;
     --hand:"LXGW WenKai TC",serif;
+    --iansui:"Iansui",cursive;
 }
 
 *{box-sizing:border-box}
@@ -51,9 +52,9 @@ a{color:inherit;text-decoration:none}
 .art-card .art-full{
     position:absolute;
     max-width:none;
-    width:100%;
-    left:0%;
-    top:2.4%;
+    width:var(--art-w, 100%);
+    left:var(--art-l, 0%);
+    top:var(--art-t, 2.4%);
     transition:opacity .35s ease;
 }
 
@@ -69,9 +70,9 @@ a{color:inherit;text-decoration:none}
 .avatar img{
     position:absolute;
     max-width:none;
-    width:159.8%;
-    left:-30%;
-    top:0;
+    width:var(--av-w, 159.8%);
+    left:var(--av-l, -30%);
+    top:var(--av-t, 0);
 }
 
 .art-card[data-view="avatar"]{aspect-ratio:1;border-radius:20.5%}
@@ -260,3 +261,110 @@ a{color:inherit;text-decoration:none}
 .foot{padding:44px 24px 36px;text-align:center}
 .foot a{font-weight:500;font-size:14px;letter-spacing:3px;color:var(--gold)}
 .foot small{display:block;margin-top:14px;font-family:var(--sans);font-weight:300;font-size:10px;color:#6b6558}
+
+
+a.tab:hover{border-color:var(--gold)}
+
+.radar .g.off{fill:var(--dim)}
+.radar .unknown{fill:none;stroke:#8f8576;stroke-opacity:.85;stroke-width:1.5;stroke-dasharray:4 4;stroke-linecap:round}
+.radar .wedge{fill:rgba(217,199,168,.22)}
+.radar .seg-line{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-linecap:round}
+
+.name-line{color:var(--gold)}
+.say{padding-left:10px;border-left:2px solid rgba(217,199,168,.5)}
+
+.credit{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.credit .lb{font-family:var(--label);font-size:9px;letter-spacing:3px;color:var(--gold)}
+.credit .nm{font-family:var(--iansui);font-size:14px;letter-spacing:1px}
+
+.stack{display:flex;flex-direction:column;gap:16px}
+
+.sheet{
+    position:relative;
+    margin:0;
+    overflow:hidden;
+    background:#f4f3f0;
+    border:1px solid rgba(217,199,168,.4);
+    border-radius:2px;
+    cursor:zoom-in;
+}
+.sheet img{width:100%;height:auto}
+.sheet .hint{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    padding:4px 8px;
+    background:rgba(13,13,15,.72);
+    font-family:var(--sans);
+    font-size:10px;
+    letter-spacing:1px;
+    color:var(--soft);
+}
+
+.lightbox{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:grid;
+    place-items:center;
+    padding:12px;
+    background:rgba(13,13,15,.94);
+    cursor:zoom-out;
+}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain}
+
+.timeline{display:flex;flex-direction:column}
+.era{position:relative;padding:0 0 18px 16px;border-left:1.5px solid rgba(217,199,168,.55)}
+.era:last-child{padding-bottom:0}
+.era::before{content:"";position:absolute;left:-3px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+.secrets{margin:0;padding:0;list-style:none}
+.secrets li{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-start;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.14);
+}
+.secrets li:first-child{border-top:1px solid rgba(255,255,255,.14)}
+.secrets .n{flex:0 0 26px;font-family:var(--en);font-weight:500;font-size:20px;line-height:22px;color:var(--gold)}
+.secrets .p{flex:1;min-width:0}
+.secrets .badge{flex:0 0 56px;width:56px;height:56px}
+.secrets .strip{flex:0 0 100%}
+
+.strip.auto{height:auto}
+.strip.auto > img{position:static;height:auto}
+.credit-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.credit-row .fno{margin-right:auto;font-family:var(--label);font-size:8px;letter-spacing:3px;color:var(--dim)}
+.credit-row .lb{font-family:var(--label);font-size:8px;letter-spacing:3px;color:var(--gold)}
+.credit-row .nm{font-family:var(--iansui);font-size:12px;letter-spacing:1px}
+
+@keyframes pageIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:none}
+}
+
+.page{
+    animation:pageIn .45s ease backwards;
+    transition:opacity .22s ease, transform .22s ease;
+}
+
+body.leaving .page{opacity:0;transform:translateY(-6px)}
+
+@media (prefers-reduced-motion:reduce){
+    .page{animation:none;transition:none}
+}
+
+.strip[data-zoom]{cursor:zoom-in}
+.strip .hint{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    padding:4px 8px;
+    background:rgba(13,13,15,.72);
+    font-family:var(--sans);
+    font-size:10px;
+    letter-spacing:1px;
+    color:var(--soft);
+}
