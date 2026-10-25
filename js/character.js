@@ -12,7 +12,7 @@ const thumb = document.getElementById('videoThumb');
 
 function playVideo(){
     const frame = document.createElement('iframe');
-    frame.src = 'https://player.bilibili.com/player.html?bvid=BV1xs4y1u7wn&page=1&t=8.59&autoplay=1&danmaku=0';
+    frame.src = 'https://player.bilibili.com/player.html?isOutside=true&aid=953449871&bvid=BV1xs4y1u7wn&cid=40913536987&p=1&t=8.59&autoplay=1&danmaku=0';
     frame.allowFullscreen = true;
     frame.setAttribute('scrolling', 'no');
     thumb.replaceChildren(frame);
@@ -82,3 +82,74 @@ document.querySelectorAll('a.tab').forEach(link => {
 });
 
 window.addEventListener('pageshow', () => document.body.classList.remove('leaving'));
+
+document.querySelectorAll('.sec').forEach(sec => {
+    const title = sec.querySelector('.sec-title');
+    if (!title) return;
+
+    const body = document.createElement('div');
+    body.className = 'sec-body';
+    const inner = document.createElement('div');
+    inner.className = 'sec-inner';
+    while (title.nextSibling) inner.appendChild(title.nextSibling);
+    body.appendChild(inner);
+    sec.appendChild(body);
+
+    const startCollapsed = !sec.hasAttribute('data-open');
+
+    title.setAttribute('role', 'button');
+    title.tabIndex = 0;
+
+    const apply = collapsed => {
+        sec.classList.toggle('is-collapsed', collapsed);
+        title.setAttribute('aria-expanded', String(!collapsed));
+        inner.inert = collapsed;
+        document.dispatchEvent(new Event('foldchange'));
+    };
+
+    sec.setCollapsed = apply;
+
+    const toggle = () => {
+        const next = !sec.classList.contains('is-collapsed');
+        apply(next);
+    };
+
+    apply(startCollapsed);
+    title.addEventListener('click', toggle);
+    title.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle();
+        }
+    });
+});
+
+const tabsRow = document.querySelector('.tabs');
+
+if (tabsRow) {
+    const ctl = document.createElement('div');
+    ctl.className = 'fold-ctl';
+    ctl.innerHTML = '<button type="button" data-fold="open">全部展開</button><button type="button" data-fold="close">全部收合</button>';
+    tabsRow.after(ctl);
+
+    const secs = [...document.querySelectorAll('.sec')].filter(s => s.setCollapsed);
+    const btnOpen = ctl.querySelector('[data-fold="open"]');
+    const btnClose = ctl.querySelector('[data-fold="close"]');
+
+    const refresh = () => {
+        const collapsedCount = secs.filter(s => s.classList.contains('is-collapsed')).length;
+        btnOpen.classList.toggle('is-off', collapsedCount === 0);
+        btnClose.classList.toggle('is-off', collapsedCount === secs.length);
+    };
+
+    ctl.addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const collapse = btn.dataset.fold === 'close';
+        secs.forEach(s => s.setCollapsed(collapse));
+        if (collapse) ctl.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    });
+
+    document.addEventListener('foldchange', refresh);
+    refresh();
+}

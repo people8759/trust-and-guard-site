@@ -368,3 +368,40 @@ body.leaving .page{opacity:0;transform:translateY(-6px)}
     letter-spacing:1px;
     color:var(--soft);
 }
+
+.sec-title{cursor:pointer;user-select:none;-webkit-user-select:none;transition:margin-bottom .35s ease}
+.sec-title::after{
+    content:"";
+    align-self:center;
+    margin-left:auto;
+    width:8px;
+    height:8px;
+    border-right:1.5px solid var(--gold);
+    border-bottom:1.5px solid var(--gold);
+    transform:rotate(45deg);
+    transition:transform .3s ease;
+}
+.sec-title:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+
+.sec-body{display:grid;grid-template-rows:1fr;transition:grid-template-rows .35s ease}
+.sec-inner{min-height:0;overflow:hidden;padding-left:4px;margin-left:-4px}
+
+.sec.is-collapsed .sec-body{grid-template-rows:0fr}
+.sec.is-collapsed .sec-title{margin-bottom:0}
+.sec.is-collapsed .sec-title::after{transform:rotate(-45deg)}
+
+.sec > *:not(.sec-title):not(.sec-body){display:none}
+
+.fold-ctl{display:flex;justify-content:flex-end;padding:14px 24px 0}
+.fold-ctl button{
+    padding:2px 0;
+    border:0;
+    background:none;
+    color:var(--gold);
+    font:400 12px var(--serif);
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:opacity .25s ease;
+}
+.fold-ctl button + button{margin-left:16px;padding-left:16px;border-left:1px solid var(--line)}
+.fold-ctl button.is-off{opacity:.35;cursor:default}
