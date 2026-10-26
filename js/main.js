@@ -134,7 +134,6 @@ window.addEventListener('pagehide', () => {
     if (!bgm.paused) localStorage.setItem('bgmTime', bgm.currentTime);
 });
 
-
 function resumeBgm(){
     if (localStorage.getItem('bgmOn') !== '1') return;
     bgm.currentTime = parseFloat(localStorage.getItem('bgmTime')) || 0;
@@ -145,10 +144,17 @@ function resumeBgm(){
     });
 }
 
-function openPage(url, push){
-    if (!pageFrame.getAttribute('src')) pageFrame.src = url;
+const pages = {
+    character: 'character.html',
+    story: 'story.html'
+};
+
+function openPage(name, push){
+    const url = pages[name];
+    if (!url) return;
+    if (pageFrame.getAttribute('src') !== url) pageFrame.src = url;
     pageFrame.classList.add('is-open');
-    if (push) history.pushState({page: true}, '', '#character');
+    if (push) history.pushState({page: true}, '', '#' + name);
 }
 
 function closePage(){
@@ -163,7 +169,8 @@ document.querySelectorAll('.menu a[data-page]').forEach(link => {
 });
 
 window.addEventListener('popstate', () => {
-    if (location.hash === '#character') openPage('character.html', false);
+    const name = location.hash.slice(1);
+    if (pages[name]) openPage(name, false);
     else closePage();
 });
 
@@ -177,5 +184,6 @@ window.addEventListener('message', e => {
 
 if (skipIntro) {
     resumeBgm();
-    if (location.hash === '#character') openPage('character.html', false);
+    const name = location.hash.slice(1);
+    if (pages[name]) openPage(name, false);
 }
