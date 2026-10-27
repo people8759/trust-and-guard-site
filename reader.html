@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>閱讀 | Trust and Guard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300&family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reader.css?v=5">
+</head>
+<body>
+<main class="reader" id="reader" data-ui="1" data-auto="0" data-done="0">
+
+    <div class="layer"><div class="blur"></div><div class="dim"></div><div class="art"></div></div>
+    <div class="layer"><div class="blur"></div><div class="dim"></div><div class="art"></div></div>
+    <div class="shade-low"></div>
+
+    <header class="hud">
+        <div class="progress"><i id="progressBar"></i></div>
+        <a class="hud-back" href="story.html" data-leave aria-label="回到章節選擇">←</a>
+        <div class="hud-title">
+            <span class="k">CHAPTER <span id="chapterNo">01</span></span>
+            <span class="n" id="chapterName"></span>
+        </div>
+        <button class="hud-menu" id="menuBtn" type="button" aria-label="設定"><i></i><i></i><i></i></button>
+    </header>
+
+    <div class="dock">
+        <div class="dock-row">
+            <span class="plate" id="plate" hidden></span>
+            <div class="controls">
+                <button class="chip" id="autoBtn" type="button">AUTO</button>
+                <button class="chip" id="skipBtn" type="button">SKIP</button>
+                <button class="chip" id="logBtn" type="button">LOG</button>
+                <button class="chip" id="hideBtn" type="button">HIDE</button>
+            </div>
+        </div>
+        <div class="box">
+            <span class="corners" aria-hidden="true"></span>
+            <p class="text" id="text"></p>
+            <i class="next" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <section class="log" id="log" aria-label="對話紀錄">
+        <header class="log-head">
+            <p class="k">LOG</p>
+            <p class="n">對話紀錄</p>
+            <button class="x" id="logClose" type="button" aria-label="關閉"></button>
+        </header>
+        <div class="log-list" id="logList"></div>
+    </section>
+
+    <section class="sheet-wrap" id="sheetWrap">
+        <div class="sheet" role="dialog" aria-label="設定">
+            <div class="sheet-head">
+                <div>
+                    <p class="k">SETTINGS</p>
+                    <h2 class="t">設定</h2>
+                </div>
+                <button class="x" id="sheetClose" type="button" aria-label="關閉"></button>
+            </div>
+            <div class="row">
+                <span class="lb">文字速度</span>
+                <div class="seg3" data-setting="textSpeed">
+                    <button type="button" data-value="1">慢</button>
+                    <button type="button" data-value="2">中</button>
+                    <button type="button" data-value="3">快</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="lb">自動播放速度</span>
+                <div class="seg3" data-setting="autoSpeed">
+                    <button type="button" data-value="1">慢</button>
+                    <button type="button" data-value="2">中</button>
+                    <button type="button" data-value="3">快</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="lb">背景音樂</span>
+                <button class="switch" id="bgmSwitch" type="button" role="switch" aria-checked="true" aria-label="背景音樂"></button>
+            </div>
+            <div class="sheet-actions">
+                <a class="btn-line" href="story.html" data-leave>回到章節選擇</a>
+                <a class="btn-line" href="index.html" id="homeLink">回到首頁</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+<audio id="music" loop preload="auto"></audio>
+<script src="js/reader.js?v=5"></script>
+</body>
+</html>

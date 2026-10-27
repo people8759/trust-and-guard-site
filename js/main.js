@@ -159,6 +159,9 @@ function openPage(name, push){
 
 function closePage(){
     pageFrame.classList.remove('is-open');
+    setTimeout(() => {
+        if (!pageFrame.classList.contains('is-open')) pageFrame.src = 'about:blank';
+    }, 400);
 }
 
 document.querySelectorAll('.menu a[data-page]').forEach(link => {
@@ -180,6 +183,8 @@ window.addEventListener('message', e => {
         closePage();
         history.replaceState(null, '', location.pathname);
     }
+    if (e.data === 'story-bgm-on') bgm.pause();
+    if (e.data === 'story-bgm-off' && localStorage.getItem('bgmOn') === '1') bgm.play().catch(() => {});
 });
 
 if (skipIntro) {
