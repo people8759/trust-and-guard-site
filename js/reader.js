@@ -7,6 +7,8 @@ const progressBar = document.getElementById('progressBar');
 const chapterNo = document.getElementById('chapterNo');
 const chapterName = document.getElementById('chapterName');
 const plate = document.getElementById('plate');
+const credit = document.getElementById('credit');
+const creditName = credit.querySelector('.nm');
 const textEl = document.getElementById('text');
 const autoBtn = document.getElementById('autoBtn');
 const skipBtn = document.getElementById('skipBtn');
@@ -152,6 +154,9 @@ function show(index, instant){
     reader.classList.toggle('has-speaker', Boolean(page.speaker));
     plate.textContent = page.speaker || '';
     plate.hidden = !page.speaker;
+    const artist = !page.speaker && page.artist;
+    credit.hidden = !artist;
+    creditName.textContent = artist || '';
     setImage(page);
     progressBar.style.width = ((index + 1) / state.pages.length * 100) + '%';
     if (index > state.seen) {

@@ -9,6 +9,7 @@
     --serif:"Noto Serif TC",serif;
     --sans:"Noto Sans TC",sans-serif;
     --hand:"LXGW WenKai TC",serif;
+    --iansui:"Iansui",cursive;
 }
 
 *{box-sizing:border-box}
@@ -182,6 +183,11 @@ body.leaving .reader{opacity:0;transition:opacity .3s ease}
 }
 .plate[hidden]{display:none}
 
+.credit{display:flex;flex-direction:column;align-self:flex-end;gap:3px;margin-bottom:4px}
+.credit[hidden]{display:none}
+.credit .lb{font-family:var(--label);font-size:8px;line-height:10px;letter-spacing:3px;color:var(--gold)}
+.credit .nm{font-family:var(--iansui);font-size:12px;line-height:14px;letter-spacing:1px}
+
 .controls{display:flex;gap:6px;margin-left:auto}
 
 .chip{
@@ -235,8 +241,8 @@ body.leaving .reader{opacity:0;transition:opacity .3s ease}
 
 .text{
     position:absolute;
-    left:20px;
-    right:20px;
+    left:19px;
+    right:19px;
     top:24px;
     font-family:var(--hand);
     font-size:15px;
