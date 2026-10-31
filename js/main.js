@@ -146,7 +146,8 @@ function resumeBgm(){
 
 const pages = {
     character: 'character.html',
-    story: 'story.html'
+    story: 'story.html',
+    anniversary: 'anniversary.html'
 };
 
 function openPage(name, push){
