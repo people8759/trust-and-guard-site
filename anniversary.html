@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:ital,wght@0,500;1,400&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300;400&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/character.css?v=6">
-    <link rel="stylesheet" href="css/anniversary.css?v=1">
+    <link rel="stylesheet" href="css/anniversary.css?v=7">
 </head>
 <body>
-<main class="page">
+<main class="page" id="page" data-stage="loading">
 
     <header class="topbar">
         <a class="back" href="index.html">←</a>
@@ -19,62 +19,131 @@
         <span class="page-title">紀念日</span>
     </header>
 
-    <section class="head">
-        <p class="head-kicker">ANNIVERSARY</p>
-        <h1 class="head-title">紀念日</h1>
-    </section>
+    <section class="gate" id="gate">
 
-    <section class="cal-wrap">
-        <div class="cal">
-            <div class="cal-head">
-                <button class="nav" id="prevBtn" type="button" aria-label="上個月">
-                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M7 1L1 7L7 13" stroke="#d9c7a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <div class="cal-title">
-                    <span class="en" id="monthEn"></span>
-                    <span class="cn" id="monthCn"></span>
+        <div class="stage stage-today" id="stageToday" data-phase="slide" role="button" tabindex="0" aria-label="點擊畫面繼續">
+            <div class="tl-wrap">
+                <div class="tl-track" id="tlTrack">
+                    <div class="tl-axis"></div>
+                    <div class="tl-ticks minor"></div>
+                    <div class="tl-ticks major"></div>
+                    <div class="tl-nodes" id="tlNodes"></div>
                 </div>
-                <button class="nav" id="nextBtn" type="button" aria-label="下個月">
-                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1L7 7L1 13" stroke="#d9c7a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
+                <i class="fade fade-l"></i>
+                <i class="fade fade-r"></i>
+                <div class="hint"><span class="arrows">←  ←  ←</span><span class="cap">TIME FLOWS</span></div>
+                <div class="cap-today">TODAY</div>
+                <div class="reveal">
+                    <p class="rv-kicker" style="--i:0">TODAY</p>
+                    <p class="rv-lead" style="--i:1">今天是</p>
+                    <h2 class="rv-title" id="rvTitle" style="--i:2"></h2>
+                    <p class="rv-date" id="rvDate" style="--i:3"></p>
+                    <p class="rv-sub" id="rvSub" style="--i:4"></p>
+                    <span class="rv-tag" id="rvTag" style="--i:5">每年</span>
+                    <p class="rv-text" id="rvText" style="--i:6"></p>
+                </div>
             </div>
-            <div class="weekdays" aria-hidden="true">
-                <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-            </div>
-            <div class="rule"></div>
-            <div class="days" id="days"></div>
-            <div class="legend">
-                <span class="lg"><i class="ring"></i>紀念日</span>
-                <span class="lg"><i class="dot"></i>選取中</span>
-            </div>
-            <span class="corners" aria-hidden="true"></span>
+            <p class="tap"><span class="cn">點擊畫面繼續</span><span class="en">TAP TO CONTINUE</span></p>
         </div>
-    </section>
 
-    <section class="detail-wrap">
-        <div class="detail">
-            <div class="detail-head">
-                <span class="d-date" id="dDate"></span>
-                <span class="d-tag" id="dTag">每年</span>
+        <div class="stage stage-count" id="stageCount">
+            <div class="count-main">
+                <div class="count-label">
+                    <span class="en">NEXT ANNIVERSARY</span>
+                    <span class="cn">下一個紀念日</span>
+                </div>
+                <div class="ring">
+                    <i class="ring-glow"></i>
+                    <svg class="ring-svg" viewBox="0 0 240 240" width="240" height="240" aria-hidden="true">
+                        <circle class="r-track" cx="120" cy="120" r="119.5"/>
+                        <circle class="r-inner" cx="120" cy="120" r="103.5"/>
+                        <circle class="r-prog" id="ringProg" cx="120" cy="120" r="119" transform="rotate(-90 120 120)"/>
+                        <circle class="r-dot" id="ringDot" cx="120" cy="1" r="4"/>
+                    </svg>
+                    <div class="ring-center">
+                        <span class="num" id="cdDays">0</span>
+                        <span class="unit">DAYS</span>
+                    </div>
+                </div>
+                <div class="clock">
+                    <div class="u"><span class="v" id="cdH">00</span><span class="l">時</span></div>
+                    <span class="colon">:</span>
+                    <div class="u"><span class="v" id="cdM">00</span><span class="l">分</span></div>
+                    <span class="colon">:</span>
+                    <div class="u"><span class="v" id="cdS">00</span><span class="l">秒</span></div>
+                </div>
+                <div class="count-info">
+                    <h2 class="ci-title" id="cdTitle"></h2>
+                    <p class="ci-date" id="cdDate"></p>
+                </div>
             </div>
-            <h2 class="d-title" id="dTitle"></h2>
-            <p class="d-sub" id="dSub"></p>
-            <p class="d-text" id="dText"></p>
+            <div class="count-action">
+                <button class="enter" id="enterBtn" type="button"><span>進入日曆</span><span class="arr" aria-hidden="true">→</span></button>
+            </div>
         </div>
+
     </section>
 
-    <section class="list-wrap">
-        <h2 class="list-title"><span class="cn">本月紀念日</span><span class="en">This month</span></h2>
-        <ul class="rows" id="rows"></ul>
-    </section>
+    <div class="calendar-view" id="calendarView">
 
-    <footer class="foot">
-        <a href="index.html">← 回到首頁</a>
-        <small>此網頁為同人作品，角色版權屬鷹角網路所有</small>
-    </footer>
+        <section class="head">
+            <p class="head-kicker">ANNIVERSARY</p>
+            <h1 class="head-title">紀念日</h1>
+        </section>
+
+        <section class="cal-wrap">
+            <div class="cal">
+                <div class="cal-head">
+                    <button class="nav" id="prevBtn" type="button" aria-label="上個月">
+                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M7 1L1 7L7 13" stroke="#d9c7a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="cal-title">
+                        <span class="en" id="monthEn"></span>
+                        <span class="cn" id="monthCn"></span>
+                    </div>
+                    <button class="nav" id="nextBtn" type="button" aria-label="下個月">
+                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1L7 7L1 13" stroke="#d9c7a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+                <div class="weekdays" aria-hidden="true">
+                    <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+                </div>
+                <div class="rule"></div>
+                <div class="days" id="days"></div>
+                <div class="legend">
+                    <span class="lg"><i class="ring"></i>紀念日</span>
+                    <span class="lg"><i class="dot"></i>選取中</span>
+                </div>
+                <span class="corners" aria-hidden="true"></span>
+            </div>
+        </section>
+
+        <section class="detail-wrap">
+            <div class="detail">
+                <div class="detail-head">
+                    <span class="d-date" id="dDate"></span>
+                    <span class="d-tag" id="dTag">每年</span>
+                </div>
+                <h2 class="d-title" id="dTitle"></h2>
+                <p class="d-sub" id="dSub"></p>
+                <p class="d-text" id="dText"></p>
+            </div>
+        </section>
+
+        <section class="list-wrap">
+            <h2 class="list-title"><span class="cn">本月紀念日</span><span class="en">This month</span></h2>
+            <ul class="rows" id="rows"></ul>
+        </section>
+
+        <footer class="foot">
+            <a href="index.html">← 回到首頁</a>
+            <small>此網頁為同人作品，角色版權屬鷹角網路所有</small>
+        </footer>
+
+    </div>
 
 </main>
 <audio id="bgm" src="audio/theme.mp3" loop preload="none"></audio>
-<script src="js/anniversary.js?v=1"></script>
+<script src="js/anniversary.js?v=7"></script>
 </body>
 </html>
