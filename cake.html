@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>堆蛋糕 | Trust and Guard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Iansui&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300&family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/character.css?v=6">
+    <link rel="stylesheet" href="css/cake.css?v=1">
+</head>
+<body>
+<main class="page" id="page" data-stage="loading">
+
+    <header class="topbar">
+        <a class="back" href="index.html">←</a>
+        <span class="kicker">CAKE STACK</span>
+        <span class="page-title">小遊戲</span>
+        <button class="pause" id="pauseBtn" type="button" aria-label="暫停"><i></i><i></i></button>
+    </header>
+
+    <section class="stage stage-start" id="stageStart">
+        <div class="sb" style="--top:87;--bot:27">
+            <div class="demo" aria-hidden="true">
+                <i class="glow"></i>
+                <div class="swing">
+                    <div class="cl" data-f="cream" style="left:112px;top:0;width:112px"></div>
+                    <i class="guide"></i>
+                </div>
+                <span class="arr" style="left:44px">←</span>
+                <span class="arr" style="left:300px">→</span>
+                <div class="cl" data-f="matcha" style="left:129px;top:100px;width:108px"></div>
+                <div class="cl" data-f="chocolate" style="left:116px;top:130px;width:120px"></div>
+                <div class="cl" data-f="strawberry" style="left:118px;top:160px;width:134px"></div>
+                <div class="cl" data-f="cream" style="left:105px;top:190px;width:150px"></div>
+                <div class="plate" style="left:75px;top:220px"></div>
+            </div>
+
+            <div class="tb tb-start">
+                <p class="kick">CAKE STACK</p>
+                <h1>堆蛋糕</h1>
+                <p class="best" id="bestRow"><span class="lb">最高紀錄</span><span class="v" id="bestStart">0</span><span class="lb">層</span></p>
+            </div>
+
+            <section class="rules">
+                <header>
+                    <h2>遊戲規則</h2>
+                    <span>HOW TO PLAY</span>
+                </header>
+                <i class="rule-line"></i>
+                <ol id="rulesList"></ol>
+            </section>
+        </div>
+        <div class="action">
+            <button class="btn" id="startBtn" type="button"><span>開始遊戲</span><span class="arr" aria-hidden="true">→</span></button>
+        </div>
+    </section>
+
+    <section class="stage stage-play" id="stagePlay">
+        <i class="play-glow"></i>
+        <div class="hud">
+            <div class="combo" id="combo" hidden><span class="lb">COMBO</span><span class="v" id="comboN">×2</span></div>
+            <div class="hud-best"><span class="lb">BEST</span><span class="v" id="bestHud">0</span></div>
+            <div class="score"><span class="n" id="scoreN">1</span><span class="lb">LAYERS</span></div>
+        </div>
+        <div class="perfect" id="perfect"><i></i><span>PERFECT</span><i></i></div>
+        <div class="world" id="world"></div>
+        <p class="hint"><span class="cn">點擊畫面放下</span><span class="en">TAP TO DROP</span></p>
+        <div class="pause-layer" id="pauseLayer" hidden>
+            <p class="kick">PAUSED</p>
+            <h2>已暫停</h2>
+            <p class="hint hint-static"><span class="cn">點擊畫面繼續</span><span class="en">TAP TO CONTINUE</span></p>
+        </div>
+    </section>
+
+    <section class="stage stage-topping" id="stageTopping">
+        <div class="sb" style="--top:17;--bot:40">
+            <div class="tb">
+                <p class="kick">TOPPING</p>
+                <h2>為蛋糕選一個裝飾</h2>
+            </div>
+            <div class="cake-view" id="cakeView">
+                <i class="topping-glow"></i>
+                <div class="cake" id="cake"></div>
+            </div>
+            <div class="options" id="options"></div>
+            <p class="topping-hint">點選水果，幫蛋糕做裝飾</p>
+        </div>
+        <div class="action">
+            <button class="btn" id="doneBtn" type="button"><span>完成</span><span class="arr" aria-hidden="true">→</span></button>
+        </div>
+    </section>
+
+    <section class="stage stage-result" id="stageResult">
+        <div class="sb" style="--top:17;--bot:51">
+            <div class="tb">
+                <p class="kick">RESULT</p>
+                <h2 id="rankTitle"></h2>
+            </div>
+            <div class="shot">
+                <img id="rankImg" alt="">
+                <div class="shot-credit"><span class="lb">ARTIST</span><span class="nm" id="rankArtist"></span></div>
+            </div>
+            <div class="dialog">
+                <span class="tag" id="rankSpeaker"></span>
+                <div class="box"><p id="rankLine"></p></div>
+            </div>
+            <div class="score-block">
+                <div class="row"><span class="n" id="resScore">0</span><span class="u">層</span></div>
+                <p class="cap">你堆出的蛋糕層數</p>
+            </div>
+            <div class="stats">
+                <div class="stat"><span class="v" id="statBest">0</span><span class="l">最高紀錄</span></div>
+                <i class="div"></i>
+                <div class="stat"><span class="v" id="statPerfect">0</span><span class="l">完美對齊</span></div>
+                <i class="div"></i>
+                <div class="stat"><span class="v" id="statCombo">×0</span><span class="l">最高連擊</span></div>
+            </div>
+        </div>
+        <div class="action">
+            <button class="btn" id="againBtn" type="button"><span>再玩一次</span></button>
+            <a class="btn line" href="index.html"><span>回到首頁</span></a>
+        </div>
+    </section>
+
+    <section class="stage stage-error" id="stageError">
+        <p class="error-text">資料讀取失敗，請重新整理頁面再試一次。</p>
+    </section>
+
+</main>
+<audio id="bgm" src="audio/theme.mp3" loop preload="none"></audio>
+<script src="js/cake.js?v=1"></script>
+</body>
+</html>

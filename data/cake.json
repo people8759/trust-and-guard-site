@@ -1,0 +1,45 @@
+{
+    "rules": [
+        "蛋糕左右移動，點擊畫面放下",
+        "需對準上一層蛋糕，超出的部分會被裁切",
+        "連續完美堆叠，目標是超大蛋糕！"
+    ],
+    "ranks": [
+        {
+            "min": 1,
+            "title": "還需要努力！",
+            "image": "images/cake-result-1.jpg",
+            "artist": "左泉",
+            "speaker": "阿米婭",
+            "line": "「mission failed ，靜下心來加把勁吧！」"
+        },
+        {
+            "min": 10,
+            "title": "還不錯！",
+            "image": "images/cake-result-2.jpg",
+            "artist": "左泉",
+            "speaker": "Dr. 宇",
+            "line": "「距離目標還有點距離，注意腳下、謹慎前行。」"
+        },
+        {
+            "min": 20,
+            "title": "非常完美！",
+            "image": "images/cake-result-3.jpg",
+            "artist": "左泉",
+            "speaker": "Dr. 宇",
+            "line": "「mission complete ，休息一下、補充糖份。」"
+        }
+    ],
+    "fruits": [
+        {"id": "strawberry", "name": "草莓", "file": "images/cake/fruit-strawberry.svg"},
+        {"id": "cherry", "name": "櫻桃", "file": "images/cake/fruit-cherry.svg"},
+        {"id": "blueberry", "name": "藍莓", "file": "images/cake/fruit-blueberry.svg"},
+        {"id": "grape", "name": "葡萄", "file": "images/cake/fruit-grape.svg"},
+        {"id": "orange", "name": "柳橙", "file": "images/cake/fruit-orange.svg"},
+        {"id": "apple", "name": "蘋果", "file": "images/cake/fruit-apple.svg"},
+        {"id": "mango", "name": "芒果", "file": "images/cake/fruit-mango.svg"},
+        {"id": "watermelon", "name": "西瓜", "file": "images/cake/fruit-watermelon.svg"},
+        {"id": "kiwi", "name": "奇異果", "file": "images/cake/fruit-kiwi.svg"},
+        {"id": "peach", "name": "水蜜桃", "file": "images/cake/fruit-peach.svg"}
+    ]
+}
