@@ -6,9 +6,9 @@
     <title>紀念日 | Trust and Guard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:ital,wght@0,500;1,400&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300;400&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Iansui&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300;400&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/character.css?v=6">
-    <link rel="stylesheet" href="css/anniversary.css?v=7">
+    <link rel="stylesheet" href="css/anniversary.css?v=8">
 </head>
 <body>
 <main class="page" id="page" data-stage="loading">
@@ -22,6 +22,7 @@
     <section class="gate" id="gate">
 
         <div class="stage stage-today" id="stageToday" data-phase="slide" role="button" tabindex="0" aria-label="點擊畫面繼續">
+            <div class="rv-shot" id="rvShot" hidden></div>
             <div class="tl-wrap">
                 <div class="tl-track" id="tlTrack">
                     <div class="tl-axis"></div>
@@ -127,6 +128,7 @@
                 <h2 class="d-title" id="dTitle"></h2>
                 <p class="d-sub" id="dSub"></p>
                 <p class="d-text" id="dText"></p>
+                <div class="d-images" id="dImages" hidden></div>
             </div>
         </section>
 
@@ -144,6 +146,6 @@
 
 </main>
 <audio id="bgm" src="audio/theme.mp3" loop preload="none"></audio>
-<script src="js/anniversary.js?v=7"></script>
+<script src="js/anniversary.js?v=8"></script>
 </body>
 </html>

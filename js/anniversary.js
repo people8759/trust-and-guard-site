@@ -19,6 +19,7 @@ const rvDate = document.getElementById('rvDate');
 const rvSub = document.getElementById('rvSub');
 const rvTag = document.getElementById('rvTag');
 const rvText = document.getElementById('rvText');
+const rvShot = document.getElementById('rvShot');
 const cdDays = document.getElementById('cdDays');
 const cdH = document.getElementById('cdH');
 const cdM = document.getElementById('cdM');
@@ -40,6 +41,7 @@ const dTag = document.getElementById('dTag');
 const dTitle = document.getElementById('dTitle');
 const dSub = document.getElementById('dSub');
 const dText = document.getElementById('dText');
+const dImages = document.getElementById('dImages');
 
 const pad = n => String(n).padStart(2, '0');
 
@@ -131,8 +133,46 @@ function sinceText(item, year){
     return item.since + ' 年起 · ' + (n > 0 ? '第 ' + n + ' 週年' : '在一起的第一天');
 }
 
+function makePic(image, alt){
+    const fig = document.createElement('figure');
+    fig.className = 'pic';
+    if (image.w && image.h) {
+        fig.style.setProperty('--r', image.w / image.h * 100);
+        fig.style.setProperty('--ar', image.w + ' / ' + image.h);
+    }
+    const img = document.createElement('img');
+    img.src = image.src;
+    img.alt = alt;
+    fig.appendChild(img);
+    if (image.artist) {
+        const credit = document.createElement('span');
+        credit.className = 'pic-credit';
+        const lb = document.createElement('span');
+        lb.className = 'lb';
+        lb.textContent = 'ARTIST';
+        const nm = document.createElement('span');
+        nm.className = 'nm';
+        nm.textContent = image.artist;
+        credit.append(lb, nm);
+        fig.appendChild(credit);
+    }
+    return fig;
+}
+
+function fillPics(box, list, alt){
+    box.replaceChildren();
+    if (!list || !list.length) {
+        box.hidden = true;
+        return;
+    }
+    list.forEach(image => box.appendChild(makePic(image, alt)));
+    box.classList.toggle('is-pair', list.length > 1);
+    box.hidden = false;
+}
+
 function renderDetail(){
     if (!sel) {
+        fillPics(dImages, null);
         dDate.textContent = '—';
         dTag.hidden = true;
         dTitle.textContent = '這個月還沒有紀念日';
@@ -145,6 +185,7 @@ function renderDetail(){
     dDate.textContent = pad(view.m) + ' / ' + pad(sel.day);
 
     if (!sel.item) {
+        fillPics(dImages, null);
         dTag.hidden = true;
         dTitle.textContent = '這一天沒有紀念日';
         dSub.hidden = true;
@@ -166,6 +207,7 @@ function renderDetail(){
 
     dText.textContent = it.text || '';
     dText.hidden = !it.text;
+    fillPics(dImages, it.images, it.title);
 }
 
 function renderRows(){
@@ -370,6 +412,7 @@ function playToday(todayItem, occ, t0){
     }
     rvText.textContent = todayItem.text || '';
     rvText.hidden = !todayItem.text;
+    fillPics(rvShot, todayItem.images, todayItem.title);
 
     buildTimeline(todayItem, occ, t0);
     setStage('today');
